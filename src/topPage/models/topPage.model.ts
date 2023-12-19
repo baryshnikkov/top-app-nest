@@ -1,3 +1,5 @@
+import { Schema } from '@nestjs/mongoose';
+
 export enum TopLevelCategory {
 	Courses,
 	Services,
@@ -5,6 +7,7 @@ export enum TopLevelCategory {
 	Products,
 }
 
+@Schema()
 export class TopPageModel {
 	_id: string;
 	firstCategory: TopLevelCategory;
