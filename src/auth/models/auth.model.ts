@@ -3,13 +3,22 @@ import { HydratedDocument } from 'mongoose';
 
 export type AuthDocument = HydratedDocument<AuthModel>;
 
-@Schema()
+@Schema({ timestamps: true })
 export class AuthModel {
-	@Prop({ required: true })
+	@Prop({ auto: true })
+	_id: string;
+
+	@Prop({ unique: true })
 	email: string;
 
-	@Prop({ required: true })
+	@Prop()
 	passwordHash: string;
+
+	@Prop({ default: Date.now })
+	createdAt: Date;
+
+	@Prop({ default: Date.now })
+	updatedAt: Date;
 }
 
 export const AuthSchema = SchemaFactory.createForClass(AuthModel);
