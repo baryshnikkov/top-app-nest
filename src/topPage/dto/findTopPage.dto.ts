@@ -1,4 +1,4 @@
-import { TopLevelCategory } from '../models/topPage.model';
+import { TopLevelCategory } from '../topPage.model';
 
 export class FindTopPageDto {
 	firstCategory: TopLevelCategory;

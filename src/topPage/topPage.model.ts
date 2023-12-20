@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, Schema as MSchema } from 'mongoose';
 
 export enum TopLevelCategory {
 	Courses,
@@ -34,7 +34,10 @@ export type TopPageDocument = HydratedDocument<TopPageModel>;
 
 @Schema({ timestamps: true })
 export class TopPageModel {
-	@Prop({ auto: true })
+	@Prop({
+		type: MSchema.Types.ObjectId,
+		auto: true,
+	})
 	_id: string;
 
 	@Prop({ enum: TopLevelCategory })

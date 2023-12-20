@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { TopPageModel, TopPageSchema } from './models/topPage.model';
+import { TopPageModel, TopPageSchema } from './topPage.model';
 
 @Module({
 	imports: [

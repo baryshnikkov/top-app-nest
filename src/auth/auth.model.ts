@@ -1,11 +1,14 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, Schema as MSchema } from 'mongoose';
 
 export type AuthDocument = HydratedDocument<AuthModel>;
 
 @Schema({ timestamps: true })
 export class AuthModel {
-	@Prop({ auto: true })
+	@Prop({
+		type: MSchema.Types.ObjectId,
+		auto: true,
+	})
 	_id: string;
 
 	@Prop({ unique: true })
