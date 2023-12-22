@@ -56,6 +56,16 @@ describe('ReviewController (e2e)', () => {
 			.expect(200);
 	});
 
+	it('/review/create (POST) - fail', async () => {
+		return request(app.getHttpServer())
+			.post('/review/create')
+			.send({ ...testDto, rating: 0 })
+			.expect(400)
+			.then(({ body }: request.Response) => {
+				console.log(body);
+			});
+	});
+
 	it('/review/byProduct/:productId (GET) - fail', async () => {
 		return request(app.getHttpServer())
 			.get('/review/byProduct/' + productIdFail)
