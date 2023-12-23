@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Schema as MSchema } from 'mongoose';
 
-export type AuthDocument = HydratedDocument<AuthModel>;
+export type UserDocument = HydratedDocument<UserModel>;
 
 @Schema({ timestamps: true })
-export class AuthModel {
+export class UserModel {
 	@Prop({
 		type: MSchema.Types.ObjectId,
 		auto: true,
@@ -24,4 +24,4 @@ export class AuthModel {
 	updatedAt: Date;
 }
 
-export const AuthSchema = SchemaFactory.createForClass(AuthModel);
+export const UserSchema = SchemaFactory.createForClass(UserModel);
