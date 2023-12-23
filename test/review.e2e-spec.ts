@@ -4,7 +4,10 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import { AppModule } from 'src/app.module';
 import { CreateReviewDto } from 'src/review/dto/createReview.dto';
-import { REVIEW_NOT_FOUND } from 'src/review/review.constants';
+import {
+	REVIEW_NOT_FOUND,
+	VALIDATE_RATING_MIN,
+} from 'src/review/review.constants';
 import { UserDto } from 'src/user/dto/user.dto';
 
 const productId = new Types.ObjectId().toHexString();
@@ -76,7 +79,7 @@ describe('ReviewController (e2e)', () => {
 			.send({ ...testDto, rating: 0 })
 			.expect(400)
 			.then(({ body }: request.Response) => {
-				console.log(body);
+				expect(body.message[0]).toBe(VALIDATE_RATING_MIN);
 			});
 	});
 
