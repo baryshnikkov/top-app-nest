@@ -2,13 +2,14 @@ import {
 	BadRequestException,
 	Body,
 	Controller,
+	HttpCode,
 	Post,
 	UsePipes,
 	ValidationPipe,
 } from '@nestjs/common';
 import { UserDto } from './dto/user.dto';
 import { UserService } from './user.service';
-import { USER_REGISTERED_ERROR } from './user.constants';
+import { ALREADY_REGISTERED_ERROR } from './user.constants';
 
 @Controller('user')
 export class UserController {
@@ -20,13 +21,21 @@ export class UserController {
 		const hasUser = await this.userService.findUser(dto.login);
 
 		if (hasUser) {
-			throw new BadRequestException(USER_REGISTERED_ERROR);
+			throw new BadRequestException(ALREADY_REGISTERED_ERROR);
 		}
 
 		return await this.userService.createUser(dto);
 	}
 
-	// @HttpCode(200)
-	// @Post('login')
-	// async login(@Body() dto: UserDto) {}
+	@UsePipes(new ValidationPipe())
+	@HttpCode(200)
+	@Post('login')
+	async login(@Body() dto: UserDto) {
+		const user = await this.userService.validateUser(
+			dto.login,
+			dto.password,
+		);
+
+		return await this.userService.login(user.email);
+	}
 }
