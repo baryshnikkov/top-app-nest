@@ -51,16 +51,16 @@ export class ProductService {
 				},
 				{
 					$lookup: {
-						from: 'Review',
+						from: 'reviewmodels',
 						localField: '_id',
 						foreignField: 'productId',
-						as: 'review',
+						as: 'reviews',
 					},
 				},
 				{
 					$addFields: {
-						reviewCount: { $size: '$review' },
-						reviewAvg: { $avg: '$review.rating' },
+						reviewCount: { $size: '$reviews' },
+						reviewAvg: { $avg: '$reviews.rating' },
 					},
 				},
 			])
