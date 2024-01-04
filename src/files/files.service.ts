@@ -1,16 +1,14 @@
+import * as sharp from 'sharp';
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
 import { format } from 'date-fns';
 import { path } from 'app-root-path';
 import { ensureDir, writeFile } from 'fs-extra';
 import { FileElementResponse } from './dto/fileElement.response';
+import { MFile } from './files.model';
 
 @Injectable()
 export class FilesService {
-	async saveFiles(
-		files: Express.Multer.File[],
-	): Promise<FileElementResponse[]> {
+	async saveFiles(files: MFile[]): Promise<FileElementResponse[]> {
 		const dateFolder = format(new Date(), 'yyyy-MM-dd');
 		const uploadFolder = `${path}/uploads/${dateFolder}`;
 		await ensureDir(uploadFolder);
@@ -30,5 +28,9 @@ export class FilesService {
 		}
 
 		return response;
+	}
+
+	async convertToWebP(file: Buffer): Promise<Buffer> {
+		return await sharp(file).webp().toBuffer();
 	}
 }
